@@ -4,11 +4,15 @@ import bodyparser from 'body-parser';
 import cors from 'cors';
 import socket from 'socket.io';
 import http from 'http';
+import dotenv from 'dotenv';
+
+import AuthCheckRoute from './Routes/AuthCheck.js';
 
 const app = express();
 const server = http.createServer(app);
 const PORT = process.env.PORT || 8000;
 const io = socket(server);
+dotenv.config();
 
 // middleware
 app.use(bodyparser.json({limit: '50mb'}));
@@ -22,9 +26,10 @@ io.on('connection', socket => {
 });
 
 // api endpoints
+app.use('/check-auth', AuthCheckRoute);
 
 // DB CONNECTION;
-mongoose.connect(process.env.MONGOURI, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
+mongoose.connect(process.env.MONGO_URI, {useUnifiedTopology: true, useNewUrlParser: true}).then(() => {
     console.log('connected to mongoDB');
 }).catch(() => {
     console.log('Didnot connect to mongoDB');

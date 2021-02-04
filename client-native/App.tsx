@@ -1,12 +1,11 @@
 import React from 'react';
-import { View } from 'react-native';
+import { enableScreens } from "react-native-screens";
+import AppNavigation from "./AppNavigation";
 
-const App = () => {
-  return (
-    <View>
+enableScreens();
 
-    </View>
-  )
-};
+function App() {
+  return <AppNavigation/>
+}
 
 export default App;
