@@ -5,11 +5,16 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "client": "cd ../client-native && npm start",
+    "redis": "cd C:/Program Files/Redis && redis-cli",
+    "dev": "concurrently \"npm start\" \"npm run client\" \"npm run redis\""
   },
   "author": "Abhinav Bhattarai",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
@@ -20,5 +25,9 @@
     "nodemailer": "^6.4.17",
     "redis": "^3.0.2",
     "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "concurrently": "^5.3.0",
+    "nodemon": "^2.0.7"
   }
 }

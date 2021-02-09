@@ -1,45 +1,39 @@
-import React, { useEffect, useState } from "react";
-import { View } from 'react-native';
-import { enableScreens } from 'react-native-screens';
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import AppLoader from "../Components/UI/LoadingPage";
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import LoaderPage from '../Components/UI/LoaderPage';
+import { enableScreens } from 'react-native-screens';
 
 enableScreens();
+
 interface PROPS {
-  navigation: any
-}
+    navigation: any
+};
 
-const AuthConfig: React.FC<PROPS> = ({ navigation }) => {
+const AuthConfig: React.FC<PROPS> = ({navigation}) => {
 
-    const [auth_status, SetAuthStatus] = useState<boolean | null>(null);
-  
-    const CheckAuthenticationFromLocalStorage = async (): Promise<void> => {
-      const token = await AsyncStorage.getItem("auth-token");
-      if (token) {
-        axios.post('/check-auth', { authtoken: token }).then((response: any) => {
-          AsyncStorage.setItem('UserInfo', response.data).then(() => {
-            SetAuthStatus(true);
-            navigation.replace('MainPage');
-          });
-        })
-      }else{
-        SetAuthStatus(false);
-        navigation.replace('LandingPage');
-      }
-    };
-  
-    useEffect(() => {
-      CheckAuthenticationFromLocalStorage();
+    useEffect( () => {
+        const CheckAuth = async (): Promise<void> => {
+            const token = await AsyncStorage.getItem('auth-token');
+            if(token){
+                interface Response {
+                    authentication: boolean,
+                    userData?: object
+                };
+                const response: Response = await axios.post('/check-auth', {Token: token});
+                if(response.authentication){
+                    navigation.replace('MainPage');
+                }else{
+                    navigation.replace('LandingPage');
+                }
+            }else{
+                navigation.replace('LandingPage');
+            }
+        };
+        CheckAuth();
     }, []);
 
-    return (
-        <View>
-            {
-              auth_status === null ? <AppLoader/> : null
-            }
-        </View>
-    )
+    return <LoaderPage/>;
 };
 
 export default AuthConfig;

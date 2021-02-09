@@ -1,16 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
-interface PROPS {
-    auth_status: boolean
-}
-
-const MainPage: React.FC<PROPS> = ({ auth_status }) => {
+const MainPage = () => {
     return (
-        <View>
+        <View style={Styles.MainPageContainer}>
             
         </View>
     )
-};
+}
+
+const Styles = StyleSheet.create({
+    MainPageContainer: {
+        flex: 1,
+        backgroundColor: 'rgb(223, 222, 222)'
+    }
+})
 
 export default MainPage;
