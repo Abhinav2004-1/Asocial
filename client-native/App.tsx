@@ -1,72 +1,44 @@
-import React from 'react';
-import { enableScreens } from 'react-native-screens';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import MainPage from './Container/MainPage/mainpage';
-import LandingPage from './Container/LandingPage/landingpage';
-
+import React, { useEffect, useState } from "react";
+import { enableScreens } from "react-native-screens";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import axios from "axios";
+import LandingPage from "./Container/LandingPage/landingpage";
+import MainPage from "./Container/MainPage/mainpage";
 enableScreens();
 
-import { HeaderButton, HeaderButtons, Item } from 'react-navigation-header-buttons';
-import { Ionicons } from '@expo/vector-icons';
-import AuthConfig from './Container/AuthConfig';
-
-const HeaderIcon: React.FC<{title: string, iconName: any}> = (props) => {
-    return (
-        <HeaderButton
-            {...props}
-            IconComponent = {Ionicons}
-            iconSize = {22}
-        />
-    )
-}
-
-const Stack = createStackNavigator();
-
 function App() {
+  const [auth_status, SetAuthStatus] = useState<boolean | null>(null);
 
-    return (
-        
-        <NavigationContainer>
-            <Stack.Navigator initialRouteName='AuthConfig' screenOptions = {{headerTitle: 'Asocial'}}>
-                <Stack.Screen
-                    name = 'AuthConfig'
-                    component = {AuthConfig}
-                    options = {{
-                        headerShown: false
-                    }}
-                />
-                <Stack.Screen
-                    name = 'MainPage'
-                    component = { MainPage }
-                />
-                <Stack.Screen
-                    name = 'LandingPage'
-                    component = { LandingPage }
-                    options = {
-                        {
-                            title: 'Welcome to Asocial',
-                            headerRight: () => {
-                                return (
-                                    <HeaderButtons HeaderButtonComponent = {HeaderIcon}>
-                                        <Item
-                                            title = 'WELCOME TO ASOCIAL'
-                                            iconName = 'ios-star'
-                                        />
-                                        <Item
-                                            title = 'WELCOME TO ASOCIAL'
-                                            iconName = 'ios-home'
-                                        />
-                                    </HeaderButtons>
-                                )
-                            }
-                        }
-                    }
-                />
-            </Stack.Navigator>
-        </NavigationContainer>
+  useEffect(() => {
+    const ProcessAuthConfigs = async (): Promise<void> => {
+      const Token = await AsyncStorage.getItem("auth-token");
+      if (Token) {
+        const LocalData = await AsyncStorage.getAllKeys();
+        if (LocalData.length >= 5) {
+          const response = await axios.post("check-auth", { Token });
+          if (response.data.status === true) {
+            SetAuthStatus(true);
+          } else {
+            SetAuthStatus(false);
+          }
+        } else {
+          SetAuthStatus(false);
+        }
+      } else {
+        SetAuthStatus(false);
+      }
+    };
 
-    )
-};
+    ProcessAuthConfigs();
+  }, []);
+
+
+  return (
+    <>
+      {(auth_status === true) ? <MainPage/> : null}
+      {(auth_status === false) ? <LandingPage/> : null}
+    </>
+  );
+}
 
 export default App;

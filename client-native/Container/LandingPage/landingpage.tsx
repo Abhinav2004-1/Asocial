@@ -1,30 +1,38 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Animated, StyleSheet, View } from "react-native";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainer } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons';
+import Signup from "../../Components/Credentials/signup";
+import Login from "../../Components/Credentials/login";
+
+const Tabs = createBottomTabNavigator();
 
 const LandingPage = () => {
-  const slide = useState<any>(new Animated.Value(90))[0];
-  const rotate = useState<any>(new Animated.ValueXY({x: 1, y: 1}))[0];
-
-  useEffect((): void => {
-    Animated.timing(slide, {
-      toValue: 720,
-      duration: 2000,
-      useNativeDriver: true,
-    }).start();
-  }, []);
-
   return (
     <View style={Styles.LandingPageContainer}>
-      <Animated.View
-          style={[
-            {
-              transform: [{rotate: }]
-            },
-            Styles.slideContainer,
-          ]}
-        >
-
-        </Animated.View>
+      <NavigationContainer>
+        <Tabs.Navigator>
+          <Tabs.Screen 
+            name = 'Login'
+            component = {Login}
+            options = {{
+              tabBarIcon: () => {
+                return <Ionicons name='ios-star' size={22} color='#333'/>
+              }
+            }}
+          />
+          <Tabs.Screen 
+            name = 'Signup'
+            component = {Signup}
+            options = {{
+              tabBarIcon: () => {
+                return <Ionicons name='ios-star' size={22} color='#333'/>
+              }
+            }}
+          />
+        </Tabs.Navigator>
+      </NavigationContainer>
     </View>
   );
 };
@@ -35,13 +43,7 @@ const Styles = StyleSheet.create({
     backgroundColor: "rgb(223, 222, 222)",
     alignItems: 'center',
     justifyContent: 'center'
-  },
-
-  slideContainer: {
-    backgroundColor: "red",
-    height: 200,
-    width: "80%",
-  },
+  }
 });
 
 export default LandingPage;
