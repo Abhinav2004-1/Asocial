@@ -1,8 +1,7 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import { Ionicons } from '@expo/vector-icons';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { NavigationContainer } from "@react-navigation/native";
+import { Ionicons } from "@expo/vector-icons";
 import Signup from "../../Components/Credentials/signup";
 import Login from "../../Components/Credentials/login";
 
@@ -10,40 +9,45 @@ const Tabs = createBottomTabNavigator();
 
 const LandingPage = () => {
   return (
-    <View style={Styles.LandingPageContainer}>
-      <NavigationContainer>
-        <Tabs.Navigator>
-          <Tabs.Screen 
-            name = 'Login'
-            component = {Login}
-            options = {{
-              tabBarIcon: () => {
-                return <Ionicons name='ios-star' size={22} color='#333'/>
-              }
-            }}
-          />
-          <Tabs.Screen 
-            name = 'Signup'
-            component = {Signup}
-            options = {{
-              tabBarIcon: () => {
-                return <Ionicons name='ios-star' size={22} color='#333'/>
-              }
-            }}
-          />
-        </Tabs.Navigator>
-      </NavigationContainer>
-    </View>
+    <NavigationContainer>
+      <Tabs.Navigator
+        initialRouteName="Login"
+        tabBarOptions={{
+          activeTintColor: "#ff385c",
+          allowFontScaling: true,
+          labelStyle: {
+            fontWeight: "bold",
+            fontSize: 13
+          },
+          labelPosition: 'beside-icon'
+        }}
+        lazy={true}
+      >
+        <Tabs.Screen
+          name="Login"
+          component={Login}
+          options={{
+            title: "Login",
+            tabBarIcon: () => {
+              return <Ionicons name="ios-star" size={25} color="#ff385c" />;
+            },
+          }}
+        />
+        <Tabs.Screen
+          name="Signup"
+          component={Signup}
+          options={{
+            title: "Signup",
+            tabBarIcon: () => {
+              return (
+                <Ionicons name="log-in-outline" size={25} color="#ff385c" />
+              );
+            },
+          }}
+        />
+      </Tabs.Navigator>
+    </NavigationContainer>
   );
 };
-
-const Styles = StyleSheet.create({
-  LandingPageContainer: {
-    flex: 1,
-    backgroundColor: "rgb(223, 222, 222)",
-    alignItems: 'center',
-    justifyContent: 'center'
-  }
-});
 
 export default LandingPage;

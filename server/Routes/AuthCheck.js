@@ -11,6 +11,6 @@ router.post('/', (req, res) => {
         }
         return res.json(err);
     })
-})
+});
 
 export default router;
