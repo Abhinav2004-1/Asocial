@@ -5,6 +5,17 @@ import axios from "axios";
 import LandingPage from "./Container/LandingPage/landingpage";
 import MainPage from "./Container/MainPage/mainpage";
 enableScreens();
+import { DefaultTheme, Provider as PaperProvider } from 'react-native-paper';
+
+const theme = {
+  ...DefaultTheme,
+  roundness: 2,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: '#3498db',
+    accent: '#ff385c',
+  },
+};
 
 function App() {
   const [auth_status, SetAuthStatus] = useState<boolean | null>(null);
@@ -32,11 +43,12 @@ function App() {
     ProcessAuthConfigs();
   }, []);
 
-
   return (
     <>
-      {(auth_status === true) ? <MainPage/> : null}
-      {(auth_status === false) ? <LandingPage/> : null}
+      <PaperProvider theme={theme}>
+        {auth_status === true ? <MainPage /> : null}
+        {auth_status === false ? <LandingPage /> : null}
+      </PaperProvider>
     </>
   );
 }
