@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { NavigationContainer } from "@react-navigation/native";
-import { Ionicons } from "@expo/vector-icons";
+import { Ionicons, Entypo } from "@expo/vector-icons";
 import Signup from "../../Components/Credentials/signup";
 import Login from "../../Components/Credentials/login";
 import axios from "axios";
@@ -183,7 +183,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
             title: "Signup",
             tabBarIcon: () => {
               return (
-                <Ionicons name="log-in-outline" size={25} color="#ff385c" />
+                <Entypo name="lock" size={24} color="#ff385c"/>
               );
             },
           }}

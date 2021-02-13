@@ -34,6 +34,7 @@ const Login: React.FC<PROPS> = (props) => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={Styles.LandingPageContainer}
     >
+      <StatusBar backgroundColor='#ff385c'/>
       <CredHeader type="LOGIN" />
       <Card>
         <View style={{ marginTop: 60 }}>
@@ -158,7 +159,6 @@ const Styles = StyleSheet.create({
   LandingPageContainer: {
     flex: 1,
     backgroundColor: "rgb(236, 236, 236)",
-    marginTop: StatusBar.currentHeight ? StatusBar.currentHeight : 15,
     paddingTop: 8,
     alignItems: "center",
   },

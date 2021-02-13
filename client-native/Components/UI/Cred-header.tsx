@@ -4,7 +4,7 @@ import { Text } from "react-native";
 const CredHeader: React.FC<{type: string}> = ({ type }) => {
   return (
     <>
-      <Text style={{ fontWeight: "bold", fontSize: 22, textAlign: "center" }}>
+      <Text style={{ fontWeight: "bold", fontSize: 24, textAlign: "center", marginTop: 12 }}>
         { type }
       </Text>
       <Text
@@ -12,7 +12,7 @@ const CredHeader: React.FC<{type: string}> = ({ type }) => {
           fontWeight: "600",
           fontSize: 18,
           color: "grey",
-          marginTop: 5,
+          marginTop: 6,
           textAlign: "center",
           letterSpacing: 1
         }}

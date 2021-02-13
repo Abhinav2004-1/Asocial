@@ -186,7 +186,6 @@ const Styles = StyleSheet.create({
   LandingPageContainer: {
     flex: 1,
     backgroundColor: "rgb(236, 236, 236)",
-    marginTop: StatusBar.currentHeight ? StatusBar.currentHeight : 15,
     paddingTop: 8,
     alignItems: "center",
   },

@@ -1,10 +1,11 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
 
 const MainPage = () => {
     return (
         <View style={Styles.MainPageContainer}>
-            
+            <StatusBar backgroundColor='#ff385c'/>
+            <Text>Hello</Text>
         </View>
     )
 }

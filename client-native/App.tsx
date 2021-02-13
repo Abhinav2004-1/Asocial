@@ -25,9 +25,10 @@ function App() {
       const Token = await AsyncStorage.getItem("auth-token");
       if (Token) {
         const LocalData = await AsyncStorage.getAllKeys();
-        if (LocalData.length >= 5) {
-          const response = await axios.post("check-auth", { Token });
-          if (response.data.status === true) {
+        if (LocalData.length >= 2) {
+          const response = await axios.post("http://192.168.0.105:8000/check-auth", { Token });
+          const error = {jwt_auth_invalid: true}
+          if (JSON.stringify(error) !== JSON.stringify(response.data)) {
             SetAuthStatus(true);
           } else {
             SetAuthStatus(false);
