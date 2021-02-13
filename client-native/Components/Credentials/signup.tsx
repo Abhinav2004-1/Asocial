@@ -9,7 +9,7 @@ import {
   Text,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { TextInput } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 import Card from "../UI/Cards";
 import CredHeader from "../UI/Cred-header";
 
@@ -22,6 +22,11 @@ interface PROPS {
   ChangePassword: CallableFunction;
   ChangeEmail: CallableFunction;
   ChangeConfirm: CallableFunction;
+  Submit: any;
+  username_err: boolean;
+  password_err: boolean;
+  confirm_err: boolean;
+  email_err: boolean;
 }
 
 const Signup: React.FC<PROPS> = (props) => {
@@ -39,13 +44,15 @@ const Signup: React.FC<PROPS> = (props) => {
       <CredHeader type="SIGNUP" />
       <Card>
         <View style={{ marginTop: 10 }}>
+          {/*// @ts-ignore */}
           <TextInput
             ref={UsernameRef}
             label="Username"
             mode="outlined"
             style={Styles.Input}
             value={props.username}
-            onChangeText={(text) => props.ChangeUsername(text)}
+            error={props.username_err}
+            onChangeText={(text): void => props.ChangeUsername(text)}
             theme={{
               colors: {
                 placeholder: "#333",
@@ -56,15 +63,23 @@ const Signup: React.FC<PROPS> = (props) => {
             }}
             onSubmitEditing={(): void => PasswordRef.current.forceFocus()}
           />
-
+          <HelperText
+            type="error"
+            visible={props.username_err}
+            style={props.username_err === false ? { display: "none" } : null}
+          >
+            Username Should be 4 characters or longer
+          </HelperText>
+          {/*// @ts-ignore */}
           <TextInput
             ref={PasswordRef}
             label="Password"
             secureTextEntry
             mode="outlined"
+            error={props.password_err}
             style={Styles.Input}
             value={props.password}
-            onChangeText={(text) => props.ChangePassword(text)}
+            onChangeText={(text): void => props.ChangePassword(text)}
             theme={{
               colors: {
                 placeholder: "#333",
@@ -76,6 +91,22 @@ const Signup: React.FC<PROPS> = (props) => {
             onSubmitEditing={(): void => ConfirmRef.current.forceFocus()}
           />
 
+          <HelperText
+            type="error"
+            visible={props.password_err}
+            style={props.password_err === false ? { display: "none" } : null}
+          >
+            Password should be atleast 8 characters
+          </HelperText>
+
+          <HelperText
+            type="error"
+            visible={props.password_err}
+            style={props.password_err === false ? { display: "none" } : null}
+          >
+            Password should contain a number
+          </HelperText>
+          {/*// @ts-ignore */}
           <TextInput
             ref={ConfirmRef}
             label="Confirm"
@@ -83,7 +114,8 @@ const Signup: React.FC<PROPS> = (props) => {
             mode="outlined"
             style={Styles.Input}
             value={props.confirm}
-            onChangeText={(text) => props.ChangeConfirm(text)}
+            error={props.confirm_err}
+            onChangeText={(text): void => props.ChangeConfirm(text)}
             theme={{
               colors: {
                 placeholder: "#333",
@@ -95,14 +127,27 @@ const Signup: React.FC<PROPS> = (props) => {
             onSubmitEditing={(): void => EmailRef.current.forceFocus()}
           />
 
+          <HelperText
+            type="error"
+            visible={props.confirm_err}
+            style={props.confirm_err === false ? { display: "none" } : null}
+            theme={{
+              colors: {
+                primary: "#ff385c",
+              },
+            }}
+          >
+            Passwords not matching
+          </HelperText>
+          {/*// @ts-ignore */}
           <TextInput
             ref={EmailRef}
             label="Email"
-            secureTextEntry
             mode="outlined"
             style={Styles.Input}
             value={props.email}
-            onChangeText={(text) => props.ChangeEmail(text)}
+            error={props.email_err}
+            onChangeText={(text): void => props.ChangeEmail(text)}
             theme={{
               colors: {
                 placeholder: "#333",
@@ -113,9 +158,17 @@ const Signup: React.FC<PROPS> = (props) => {
             }}
           />
 
+          <HelperText
+            type="error"
+            visible={props.email_err}
+            style={props.email_err === false ? { display: "none" } : null}
+          >
+            Invalid Email Credentials
+          </HelperText>
+
           <TouchableOpacity
-            onPress={() => console.log("hello")}
-            style={{ paddingHorizontal: "2%", marginTop: 40 }}
+            onPress={props.Submit}
+            style={{ paddingHorizontal: "2%", marginTop: 35, marginBottom: 20 }}
           >
             <View style={Styles.LoginButton}>
               <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>

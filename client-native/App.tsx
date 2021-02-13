@@ -43,11 +43,15 @@ function App() {
     ProcessAuthConfigs();
   }, []);
 
+  const ChangeAuthentication = (type: boolean): void => {
+    SetAuthStatus(type);
+  }
+
   return (
     <>
       <PaperProvider theme={theme}>
         {auth_status === true ? <MainPage /> : null}
-        {auth_status === false ? <LandingPage /> : null}
+        {auth_status === false ? <LandingPage SetAuthentication={ChangeAuthentication}/> : null}
       </PaperProvider>
     </>
   );

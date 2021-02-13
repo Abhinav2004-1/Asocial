@@ -7,9 +7,9 @@ import {
   KeyboardAvoidingView,
   Platform,
   TouchableOpacity,
-  Text
+  Text,
 } from "react-native";
-import { TextInput } from "react-native-paper";
+import { TextInput, HelperText } from "react-native-paper";
 import Card from "../UI/Cards";
 import CredHeader from "../UI/Cred-header";
 
@@ -18,6 +18,9 @@ interface PROPS {
   username: string;
   password: string;
   ChangePassword: CallableFunction;
+  Submit: any;
+  username_err: boolean;
+  password_err: boolean;
 }
 
 const Login: React.FC<PROPS> = (props) => {
@@ -33,12 +36,14 @@ const Login: React.FC<PROPS> = (props) => {
       <CredHeader type="LOGIN" />
       <Card>
         <View style={{ marginTop: 60 }}>
+          {/*// @ts-ignore */}
           <TextInput
             ref={UsernameRef}
             label="Username"
             mode="outlined"
             style={Styles.Input}
             value={props.username}
+            error={props.username_err}
             onChangeText={(text) => props.ChangeUsername(text)}
             theme={{
               colors: {
@@ -51,8 +56,22 @@ const Login: React.FC<PROPS> = (props) => {
             onSubmitEditing={(): void => PasswordRef.current.forceFocus()}
           />
 
+          <HelperText
+            type="error"
+            visible={props.username_err}
+            style={
+              props.username_err === false
+                ? { display: "none" }
+                : { fontWeight: "500" }
+            }
+          >
+            Username should be atleast 4 characters long
+          </HelperText>
+
+          {/*// @ts-ignore */}
           <TextInput
             ref={PasswordRef}
+            error={props.password_err}
             label="Password"
             secureTextEntry
             mode="outlined"
@@ -69,28 +88,37 @@ const Login: React.FC<PROPS> = (props) => {
             }}
           />
 
+          <HelperText
+            type="error"
+            visible={props.password_err}
+            style={
+              props.password_err === false
+                ? { display: "none" }
+                : { fontWeight: "500" }
+            }
+          >
+            Password should be atleast 8 characters long
+          </HelperText>
+
           <TouchableOpacity
-            onPress={() => console.log("hello")}
+            onPress={props.Submit}
             style={{ paddingHorizontal: "2%", marginTop: 40 }}
           >
             <View style={Styles.LoginButton}>
-              <Text style={{ color: "#fff", fontWeight: "bold", fontSize: 16 }}>
+              <Text style={{ color: "#fff", fontWeight: "500", fontSize: 16 }}>
                 Login
               </Text>
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity
-            onPress={() => console.log("hello")}
-            style={{ paddingHorizontal: "2%", marginTop: 10 }}
-          >
+          <TouchableOpacity style={{ paddingHorizontal: "2%", marginTop: 10 }}>
             <View
               style={[
                 Styles.LoginButton,
                 { backgroundColor: "rgb(221, 219, 219)" },
               ]}
             >
-              <Text style={{ color: "#333", fontWeight: "bold", fontSize: 16 }}>
+              <Text style={{ color: "#333", fontWeight: "500", fontSize: 16 }}>
                 Forgot Password ?
               </Text>
             </View>
