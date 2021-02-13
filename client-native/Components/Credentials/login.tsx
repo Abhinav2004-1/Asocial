@@ -21,6 +21,7 @@ interface PROPS {
   Submit: any;
   username_err: boolean;
   password_err: boolean;
+  login_cred_err: boolean;
 }
 
 const Login: React.FC<PROPS> = (props) => {
@@ -43,7 +44,7 @@ const Login: React.FC<PROPS> = (props) => {
             mode="outlined"
             style={Styles.Input}
             value={props.username}
-            error={props.username_err}
+            error={props.username_err === true ? props.username_err : props.login_cred_err}
             onChangeText={(text) => props.ChangeUsername(text)}
             theme={{
               colors: {
@@ -68,10 +69,22 @@ const Login: React.FC<PROPS> = (props) => {
             Username should be atleast 4 characters long
           </HelperText>
 
+          <HelperText
+            type="error"
+            visible={props.login_cred_err}
+            style={
+              props.login_cred_err === false
+                ? { display: "none" }
+                : { fontWeight: "500" }
+            }
+          >
+            Invalid Username or Password
+          </HelperText>
+
           {/*// @ts-ignore */}
           <TextInput
             ref={PasswordRef}
-            error={props.password_err}
+            error={props.password_err === true ? props.password_err : props.login_cred_err}
             label="Password"
             secureTextEntry
             mode="outlined"
@@ -98,6 +111,18 @@ const Login: React.FC<PROPS> = (props) => {
             }
           >
             Password should be atleast 8 characters long
+          </HelperText>
+
+          <HelperText
+            type="error"
+            visible={props.login_cred_err}
+            style={
+              props.login_cred_err === false
+                ? { display: "none" }
+                : { fontWeight: "500" }
+            }
+          >
+            Invalid Username or Password
           </HelperText>
 
           <TouchableOpacity

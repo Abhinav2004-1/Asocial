@@ -24,6 +24,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
   const [signup_email_err, SetSignupEmailErr] = useState<boolean>(false);
   const [login_username_err, SetLoginUsernameErr] = useState<boolean>(false);
   const [login_password_err, SetLoginPasswordErr] = useState<boolean>(false);
+  const [login_cred_err, SetLoginCredErr] = useState<boolean>(false);
 
   const LoginUsernameChange = (value: string): void => {
     SetUsernameLogin(value);
@@ -67,7 +68,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
         };
 
         axios
-          .post("http://192.168.105:8000/register", context)
+          .post("http://192.168.0.105:8000/register", context)
           .then((response) => {
             const error = { registration_err: true };
             if (JSON.stringify(error) !== JSON.stringify(response.data)) {
@@ -79,8 +80,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
                 );
               });
             }
-          })
-          .catch((err) => {console.log(err)});
+          });
       } else {
         SetSignupPasswordErr(true);
       }
@@ -110,9 +110,8 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
           Password: password_login,
         };
         axios
-          .post("http://192.168.105:8000/login", context)
+          .post("http://192.168.0.105:8000/login", context)
           .then((response) => {
-            console.log(response.data);
             if (
               JSON.stringify(response.data) !==
               JSON.stringify({ access_granted: false })
@@ -125,11 +124,9 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
                 );
               });
             } else {
-              SetLoginPasswordErr(true);
-              SetLoginUsernameErr(true);
+              SetLoginCredErr(true);
             }
-          })
-          .catch((err) => {console.log(err)});
+          });
       } else {
         SetLoginPasswordErr(true);
       }
@@ -169,6 +166,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
         >
           {() => (
             <Login
+              login_cred_err={login_cred_err}
               username={username_login}
               password={password_login}
               ChangePassword={LoginPasswordChange}
