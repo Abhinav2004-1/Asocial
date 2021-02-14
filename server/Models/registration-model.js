@@ -14,6 +14,11 @@ const Schema = new mongoose.Schema({
     Email: {
         type: String,
         required: true
+    },
+    
+    FriendRequest: {
+        type: [String],
+        default: []
     }
 });
 
