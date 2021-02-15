@@ -30,7 +30,7 @@ const Login: React.FC<PROPS> = (props) => {
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={30}
+      keyboardVerticalOffset={100}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={Styles.LandingPageContainer}
     >

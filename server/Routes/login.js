@@ -21,7 +21,7 @@ router.post("/", (req, res) => {
               process.env.JWT_AUTH_TOKEN,
               (err, token) => {
                 if (!err) {
-                  return res.json({ token });
+                  return res.json({ token, password: response.Password });
                 }
               }
             );

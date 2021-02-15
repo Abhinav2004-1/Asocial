@@ -4,7 +4,7 @@ import MessageCard from './MessageCard';
 import SearchBar from './SearchBar';
 
 interface PROPS {
-    MessagesList: Array<{ProfilePic: string, id: string, messages: Array<object>, username: string}>;
+    MessagesList: Array<{ProfilePic: string, id: string, messages: Array<object>, username: string}> | null;
     ChangeSearchValue: any;
     refreshing: boolean;
     search_value: string;

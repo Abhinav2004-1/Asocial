@@ -68,7 +68,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
         };
 
         axios
-          .post("http://192.168.0.105:8000/register", context)
+          .post("http://192.168.0.104:8000/register", context)
           .then((response) => {
             const error = { registration_err: true };
             if (JSON.stringify(error) !== JSON.stringify(response.data)) {
@@ -110,7 +110,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
           Password: password_login,
         };
         axios
-          .post("http://192.168.0.105:8000/login", context)
+          .post("http://192.168.0.104:8000/login", context)
           .then((response) => {
             if (
               JSON.stringify(response.data) !==
@@ -119,7 +119,12 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
               AsyncStorage.setItem("Username", username_login).then(() => {
                 AsyncStorage.setItem("auth-token", response.data.token).then(
                   () => {
-                    props.SetAuthentication(true);
+                    AsyncStorage.setItem(
+                      "Password",
+                      response.data.password,
+                    ).then(() => {
+                      props.SetAuthentication(true);
+                    });
                   }
                 );
               });
@@ -182,9 +187,7 @@ const LandingPage: React.FC<{ SetAuthentication: CallableFunction }> = (
           options={{
             title: "Signup",
             tabBarIcon: () => {
-              return (
-                <Entypo name="lock" size={24} color="#ff385c"/>
-              );
+              return <Entypo name="lock" size={24} color="#ff385c" />;
             },
           }}
         >

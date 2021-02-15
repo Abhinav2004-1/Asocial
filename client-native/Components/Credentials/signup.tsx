@@ -37,9 +37,9 @@ const Signup: React.FC<PROPS> = (props) => {
 
   return (
     <KeyboardAvoidingView
-      keyboardVerticalOffset={50}
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? 'position' : "height"}
       style={Styles.LandingPageContainer}
+      keyboardVerticalOffset = {100}
     >
       <CredHeader type="SIGNUP" />
       <Card>
